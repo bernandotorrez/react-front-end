@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Menu from './components/Menu'
 import axios from 'axios'
+import md5 from 'md5'
 
 function tes() {
 	alert('tesa');
@@ -17,34 +18,48 @@ class Login extends Component {
 			username: '',
 			password: '',
 			is_submit: false,
-			login_data_satu: []
+			login_data_satu: [],
+			logged_in: false
 		}
 
 	}
 
-	buttonClick = () => {
-		console.log('clicked')
-		//$('#tampil').html('login');
+	logOut = () => {
+		this.setState({
+			logged_in: false
+		})
 	}
 
 	formSubmit = (event) => {
 		//alert('Username :'+this.state.username+' | Password : '+this.state.password)
 		const username = this.state.username
-		const url = 'http://localhost:3001/api/logins/'+username+'/Anggota'
+		const password = this.state.password
+		const url = 'http://localhost:3001/api/logins?filter={"where" : \
+		{"no_hp" :"'+username+'", \
+		"password": "'+md5(password)+'" }}'
 		axios.get(url)
       .then(res => {
-      	
+      		
 
+      		if(res.data.length <= 0) {
+      		const logged_in = false
+      		const is_submit = false
+      		const login_data_satu = {no_hp: "Salah"}
+      		this.setState({is_submit, login_data_satu, logged_in})
+      		} else {
+      		const logged_in = true
       		const is_submit = true
-      		const login_data_satu = res.data
-      		this.setState({is_submit, login_data_satu})
+      		const login_data_satu = res.data[0]
+      		this.setState({is_submit, login_data_satu, logged_in})
+      		}
+      		
       	
       	
         //console.log(res);
         console.log(res.data);
       }).catch(error => {
-      	const is_submit = false
-      		const login_data_satu = 'Not Found'
+      		const is_submit = false
+      		const login_data_satu = {no_hp:"Not Found"};
       		this.setState({is_submit, login_data_satu})
       	console.log(error)
       })
@@ -87,6 +102,8 @@ class Login extends Component {
 
 		if(is_loaded==false){
 			return (<div> loading ... </div> )
+		} if(this.state.logged_in==true){
+			return (<div> Selamat datang, {data_satu.no_hp}, <font onClick={this.logOut} >Logout</font> </div> )
 		} else {
 
 		return (
