@@ -3,11 +3,6 @@ import Menu from './components/Menu'
 import axios from 'axios'
 import md5 from 'md5'
 
-function tes() {
-	alert('tesa');
-	return false;
-}
-
 class Login extends Component {
 	constructor(){
 		super()
@@ -26,6 +21,7 @@ class Login extends Component {
 	logOut = () => {
 		this.setState({
 			logged_in: false,
+			login_data_satu: [],
 			username: '',
 			password: ''
 		})
@@ -33,34 +29,7 @@ class Login extends Component {
 
 	formSubmit = (event) => {
 		//alert('Username :'+this.state.username+' | Password : '+this.state.password)
-		const username = this.state.username
-		const password = this.state.password
-		const url = 'http://localhost:3001/api/logins?filter={"where" : \
-		{"no_hp" :"'+username+'", \
-		"password": "'+md5(password)+'" }}'
-		axios.get(url)
-      .then(res => {
-      		
-      		if(res.data.length <= 0) {
-      		const logged_in = false
-      		const login_data_satu = {no_hp: "Salah"}
-      		const password = ''
-      		this.setState({ login_data_satu, logged_in, password})
-      		} else {
-      		const logged_in = true
-      		const login_data_satu = res.data[0]
-      		this.setState({ login_data_satu, logged_in})
-      		}
-      		
-      	
-      	
-        //console.log(res);
-        console.log(res.data);
-      }).catch(error => {
-      		const login_data_satu = {no_hp:"Not Found"};
-      		this.setState({ login_data_satu})
-      	console.log(error)
-      })
+		this.doLogin();
 		event.preventDefault()
 	}
 
@@ -76,14 +45,52 @@ class Login extends Component {
 		})
 	}
 
+	async getData() {
+		try {
+
+      	const response = await fetch(`http://localhost:3001/api/logins`);
+    	const json = await response.json();
+    	this.setState({ 
+    		login_data: json,
+    		is_loaded: true
+    		 });
+
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	async doLogin(){
+
+		try {
+		const username = this.state.username
+		const password = this.state.password
+		const url = 'http://localhost:3001/api/logins?filter={"where" : \
+		{"no_hp" :"'+username+'", \
+		"password": "'+md5(password)+'" }}'
+		const response = await axios(url);
+    	const json = await Promise.all([response.data]);
+    	if(json[0].length > 0){
+    		this.setState({ 
+    		login_data_satu: json[0][0],
+    		logged_in: true
+    		 });
+    	} else {
+    		this.setState({ 
+    		login_data_satu: {no_hp:'Salah'},
+    		logged_in: false
+    		 });
+    	}
+    	
+		} catch (error) {
+			console.log(error)
+		}
+
+		
+	}
+
 	componentDidMount(){
-		const url = 'http://localhost:3001/api/logins'
-		axios.get(url)
-      .then(res => {
-        const login_data = res.data;
-        const is_loaded = true;
-        this.setState({ login_data, is_loaded });
-      })
+		this.getData()
 	}
 
 	render(){
