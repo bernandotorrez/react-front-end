@@ -33,15 +33,12 @@ class Login extends Component {
 		event.preventDefault()
 	}
 
-	changeUsername = (event) => {
+	changeValue = (event) => {
+		const target = event.target
+		const value = target.value
+		const name = target.name
 		this.setState({
-			username: event.target.value
-		})
-	}
-
-	changePassword = (event) => {
-		this.setState({
-			password: event.target.value
+			[name]: value
 		})
 	}
 
@@ -120,9 +117,13 @@ class Login extends Component {
 
 			<form onSubmit={this.formSubmit}>
 
-			<p><label>Username : </label><input type="text" placeholder="Username" value={username} onChange={this.changeUsername}/></p>
+			<p><label>Username : </label>
+			<input type="text" name="username" placeholder="Username" value={username} onChange={this.changeValue}/>
+			</p>
  
-			<p><label>Password : </label><input type="password" placeholder="Password" value={password} onChange={this.changePassword} /></p>
+			<p><label>Password : </label>
+			<input type="password" name="password" placeholder="Password" value={password} onChange={this.changeValue} />
+			</p>
 
 			<p><button type="submit" value="Login" >Login</button></p>
 		
