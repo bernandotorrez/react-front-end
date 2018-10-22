@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Menu from './components/Menu'
 import axios from 'axios'
 import md5 from 'md5'
 
@@ -109,7 +108,7 @@ class Login extends Component {
 
 		return (
 			<div>
-			<Menu/>
+			
 			<h1> Silahkan Login </h1>
 
 			<h3><font color="red" id="tampil">{data_satu.no_hp} - {data_satu.nama_anggota} - {data_satu.id_anggota}</font></h3>
