@@ -108,12 +108,12 @@ class Login extends Component {
 		return (
 			<div>
 			
-			<h1> Silahkan Login </h1>
+			<h1 className="text-center"> Silahkan Login </h1>
 
 			<h3><font color="red" id="tampil">{data_satu.username}</font></h3>
 			
 
-			<form onSubmit={this.formSubmit}>
+			{/*<form onSubmit={this.formSubmit}>
 
 			<p><label>Username : </label>
 			<input type="text" name="username" placeholder="Username" value={username} onChange={this.changeValue}/>
@@ -125,7 +125,42 @@ class Login extends Component {
 
 			<p><button type="submit" value="Login" >Login</button></p>
 		
-			</form>
+			</form>*/}
+			 <div className="container">
+            <div className="row">
+                <div className="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+			<form className="form" method="post" id="login-form" novalidate="novalidate" wtx-context="72B58FA7-2F39-452C-9030-40A648CABF0D">
+                            <div className="header header-success text-center">
+                                <h4 className="card-title">Sign in</h4>
+                                <div className="social-line">
+
+                                </div>
+                          </div>
+                          
+                            <div className="card-content">
+
+                                
+                                <div className="input-group">
+                                    <span className="input-group-addon">
+                                        <i className="material-icons">email</i>
+                                    </span>
+                                    <div className="form-group"><input type="text" id="email" name="email" className="form-control" placeholder="Email..." minlength="10" maxlength="100" wtx-context="3B8B3636-644C-43D6-AA24-889EDA2C3E70" aria-invalid="false"/><span className="material-input"></span></div>
+                                    <span className="help-block" id="error"></span>
+                                </div>
+   
+                            </div>
+                            <div className="footer text-center">
+                                <button type="submit" className="btn btn-success btn-lg" name="btn-login" id="btn-login">Sign In</button>
+                                 <br/>Belum Punya Akun?<a href="https://jujitsu-upn.online/register" className="btn btn-success btn-simple btn-wd btn-lg">Sign Up<div className="ripple-container"></div></a>
+                                 <br/>Lupa Password?<a href="https://jujitsu-upn.online/reset" className="btn btn-success btn-simple btn-wd btn-lg">Reset Password<div className="ripple-container"></div></a>
+                            </div>
+                        </form>
+
+                        </div>
+
+                        </div>
+
+                        </div>
 
 			 <ul>
           {items.map(item => (
