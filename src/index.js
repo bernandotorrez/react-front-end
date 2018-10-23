@@ -4,13 +4,8 @@ import './index.css';
 //import App from './App';
 import Layout from './components/Layout';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter as Router } from 'react-router-dom'
 
-ReactDOM.render(
-	<Router>
-	<Layout />
-	</Router>
-	, 
+ReactDOM.render(<Layout />, 
 	document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
