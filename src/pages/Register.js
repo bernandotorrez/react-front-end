@@ -1,35 +1,17 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import md5 from 'md5'
 import { Link } from 'react-router-dom'
+import md5 from 'md5'
+import axios from 'axios'
 
-class Login extends Component {
+class Register extends Component {
+
 	constructor(){
 		super()
-
 		this.state = {
-			login_data: [],
 			username: '',
 			password: '',
-			login_data_satu: [],
-			logged_in: false
+			msg: ''
 		}
-
-	}
-
-	logOut = () => {
-		this.setState({
-			logged_in: false,
-			login_data_satu: [],
-			username: '',
-			password: ''
-		})
-	}
-
-	formSubmit = (event) => {
-		//alert('Username :'+this.state.username+' | Password : '+this.state.password)
-		this.doLogin();
-		event.preventDefault()
 	}
 
 	changeValue = (event) => {
@@ -41,66 +23,65 @@ class Login extends Component {
 		})
 	}
 
-	async doLogin(){
+	formSubmit = (event) => {
+		this.doRegister()
+		
+		event.preventDefault()
+	}
+
+
+	async doRegister(){
 
 		try {
 		const username = this.state.username
 		const password = this.state.password
-		const url = 'http://localhost:3001/api/logins?filter={"where" : {"username" :"'+username+'", "password": "'+md5(password)+'" }}'
-		const response = await axios(url);
+		const url = 'http://localhost:3001/api/logins'
+		const response = await axios.post(url, {
+					 "username": username, 
+					   "level": "Admin", 
+					   "login_time": "2018-10-24T15:55:12.662Z",  
+					   "register_time": "2018-10-24T15:55:12.662Z", 
+					   "status": "1", 
+					   "verifikasi": "1", 
+					   "passkey": md5(password),  
+					   "password": md5(password) 
+				})
     	const json = await Promise.all([response.data]);
-    	if(json[0].length > 0){
+    	if(json.length > 0){
     		this.setState({ 
-    		login_data_satu: json[0][0],
-    		logged_in: true
+    		
+    		msg: 'Register Berhasil'
     		 });
     	} else {
     		this.setState({ 
-    		login_data_satu: {username:'Username atau Password anda Salah'},
-    		password: '',
-    		logged_in: false
+    		msg: 'Register Gagal'
     		 });
     	}
+
+    	console.log(json)
+    	console.log(json.length)
     	
 		} catch (error) {
 			console.log(error)
+			console.log(error.error)
+			console.log(error.message)
 		}
 
 		
 	}
 
 	render(){
-
-		
-		const username = this.state.username;
-		const password = this.state.password
-		const data_satu = this.state.login_data_satu
-		//console.log(items);
-
-	
-
-		if(this.state.logged_in===true){
-			return (<div> Selamat datang, {data_satu.username}, <a href="#" onClick={this.logOut} >Logout</a> </div> )
-		} else {
-
-		return (
-			<div>
-			
-			
-			 <div className="container-fluid">
+		return(
+			<div className="container-fluid">
     <div className="container">
         <div className="row">
-            <div className="col-sm-12">
-
+            <div className="col-md-12">
                 <div className="login-register-form">
-
                     <div className="form-holder">
-                       	
+                        <font className="text-success">{this.state.msg}</font>
                         <div className="form-row form-links">
-                        <font className="text-danger">{data_satu.username} </font>
                             <div className="col-xs-12">
-                            <Link to="/login" className="link-to active">Login</Link> or <Link to="/register" className="link-to">Register</Link>
-                                
+                             <Link to="/login" className="link-to">Login</Link> or <Link to="/register" className="link-to active">Register</Link>
                             </div>
                         </div>
                         <form onSubmit={this.formSubmit}>
@@ -117,12 +98,16 @@ class Login extends Component {
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="col-xs-6">
-                                    <a href="#" className="forget-link">Forget your password?</a>
+                                <div className="col-xs-12">
+                                    <label>Repeat password</label>
+                                    <input type="password" className="form-control" required/>
                                 </div>
-                                <div className="col-xs-6">
+                            </div>
+                           
+                            <div className="form-row">
+                                <div className="col-xs-12">
                                     <div className="submit-holder">
-                                        <button type="submit">Login</button>
+                                        <button type="submit">Register</button>
                                     </div>
                                 </div>
                             </div>
@@ -134,11 +119,8 @@ class Login extends Component {
     </div>
 </div>
 
-
-			</div>
 		)
-		}
 	}
 }
 
-export default Login
+export default Register

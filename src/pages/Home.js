@@ -3,20 +3,24 @@ import React from 'react'
 const Home = () => (
 	<div> 
 		
-	<div className="section no-pad-bot" id="index-banner">
-    <div className="container">
-      <br/><br/>
-      <h1 className="header center orange-text">Starter Template</h1>
-      <div className="row center">
-        <h5 className="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-      </div>
-      <div className="row center">
-        <a href="http://materializecss.com/getting-started.html" id="download-button" className="btn-large waves-effect waves-light orange">Get Started</a>
-      </div>
-      <br/><br/>
-
+	<div className="support-links container-fluid">
+    <div className="row">
+        <div className="col-sm-6 hylink-holder">
+            <div className="hylink-box">
+                <div className="icon"><img src="assets/images/info.svg" alt=""/></div>
+                <a href="#" className="link">Let’s talk</a>
+                <div className="text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem ccusantium.</div>
+            </div>
+        </div>
+        <div className="col-sm-6 hylink-holder">
+            <div className="hylink-box">
+                <div className="icon"><img src="assets/images/chat.svg" alt=""/></div>
+                <a href="#" className="link">Go to support center</a>
+                <div className="text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem ccusantium.</div>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
 			
 	</div>
 )
