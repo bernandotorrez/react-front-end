@@ -9,7 +9,7 @@ const Menu = () => (
     <div>
      <nav className="light-blue lighten-1" role="navigation">
     <div className="nav-wrapper container"><a id="logo-container" href="#" className="brand-logo">Logo</a>
-      <ul class="right hide-on-med-and-down">
+      <ul className="right hide-on-med-and-down">
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -36,7 +36,7 @@ const Menu = () => (
           <Link to="/login">Login</Link>
         </li>
       </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <a href="#" data-target="nav-mobile" className="sidenav-trigger"><i className="material-icons">menu</i></a>
     </div>
   </nav>
       
